@@ -1,19 +1,10 @@
-window.PIXI = require("pixi.js");
-window.p2 = require("p2");
-var Phaser = require("phaser");
-var game = new Phaser.Game(800, 600, Phaser.AUTO, "", { preload: preload, create: create, update: update });
-
-function preload() {
-
+var Phaser = window.Phaser
+var GameStates = require("states/GameStates");
+var GameStateClazzes = require("states/GameStateClazzes");
+var game = window.game = new Phaser.Game(800, 600, Phaser.AUTO, "game", null, true, false);
+for (var state in GameStates) {
+  if (GameStates.hasOwnProperty(state)) {
+    game.state.add(GameStates[state], GameStateClazzes[state].clazz);
+  }
 }
-
-function create() {
-
-}
-
-function update() {
-
-}
-function collectStar (player, star) {
-
-}
+game.state.start(GameStates.boot);

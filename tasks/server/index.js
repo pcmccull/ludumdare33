@@ -9,7 +9,6 @@ gulp.task("serve", [
 
 	var app = express();
 	var server = require("http").createServer(app);
-	var compression = require("compression");
 
 	server.listen(PORT, "0.0.0.0", function () {
 		var port = server.address().port;
@@ -19,5 +18,4 @@ gulp.task("serve", [
 		gulpOpen(url);
 	});
 	app.use(express.static("server"));
-	app.use(compression());
 });

@@ -1,0 +1,274 @@
+{
+    "frames": {
+        "accuseDialog": {
+            "frame": {
+                "x": 640,
+                "y": 602,
+                "w": 171,
+                "h": 121
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 171,
+                "h": 121
+            },
+            "sourceSize": {
+                "w": 171,
+                "h": 121
+            }
+        },
+        "backgroundCombined": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 801,
+                "h": 602
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 801,
+                "h": 602
+            },
+            "sourceSize": {
+                "w": 801,
+                "h": 602
+            }
+        },
+        "car1": {
+            "frame": {
+                "x": 1045,
+                "y": 602,
+                "w": 78,
+                "h": 42
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 78,
+                "h": 42
+            },
+            "sourceSize": {
+                "w": 78,
+                "h": 42
+            }
+        },
+        "car2": {
+            "frame": {
+                "x": 967,
+                "y": 602,
+                "w": 78,
+                "h": 42
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 78,
+                "h": 42
+            },
+            "sourceSize": {
+                "w": 78,
+                "h": 42
+            }
+        },
+        "car3": {
+            "frame": {
+                "x": 811,
+                "y": 602,
+                "w": 78,
+                "h": 42
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 78,
+                "h": 42
+            },
+            "sourceSize": {
+                "w": 78,
+                "h": 42
+            }
+        },
+        "car4": {
+            "frame": {
+                "x": 889,
+                "y": 602,
+                "w": 78,
+                "h": 42
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 78,
+                "h": 42
+            },
+            "sourceSize": {
+                "w": 78,
+                "h": 42
+            }
+        },
+        "cart": {
+            "frame": {
+                "x": 1142,
+                "y": 602,
+                "w": 19,
+                "h": 13
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 19,
+                "h": 13
+            },
+            "sourceSize": {
+                "w": 19,
+                "h": 13
+            }
+        },
+        "cartFull": {
+            "frame": {
+                "x": 1123,
+                "y": 602,
+                "w": 19,
+                "h": 13
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 19,
+                "h": 13
+            },
+            "sourceSize": {
+                "w": 19,
+                "h": 13
+            }
+        },
+        "menuScreen": {
+            "frame": {
+                "x": 801,
+                "y": 0,
+                "w": 800,
+                "h": 600
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 800,
+                "h": 600
+            },
+            "sourceSize": {
+                "w": 800,
+                "h": 600
+            }
+        },
+        "person1": {
+            "frame": {
+                "x": 1123,
+                "y": 615,
+                "w": 10,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 10,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 10,
+                "h": 17
+            }
+        },
+        "person2": {
+            "frame": {
+                "x": 1133,
+                "y": 615,
+                "w": 10,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 10,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 10,
+                "h": 17
+            }
+        },
+        "person3": {
+            "frame": {
+                "x": 1143,
+                "y": 615,
+                "w": 10,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 10,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 10,
+                "h": 17
+            }
+        },
+        "titleScreen": {
+            "frame": {
+                "x": 0,
+                "y": 602,
+                "w": 640,
+                "h": 400
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 400
+            },
+            "sourceSize": {
+                "w": 640,
+                "h": 400
+            }
+        }
+    },
+    "meta": {
+        "app": "https://github.com/Ensighten/spritesmith",
+        "image": "sprites.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 1601,
+            "h": 1002
+        },
+        "scale": 1
+    }
+}
