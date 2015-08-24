@@ -7,23 +7,30 @@ var collisionController = require("../controllers/CollisionController");
 
 module.exports = {
   shoppers: [],
+  monstersFound: 0,
+  monstersEscaped: 0,
   create: function () {
+    _.bindAll(this, "checkIfHoverShopper")
     var background = game.add.sprite(0,0, "sprites");
     background.frameName= "backgroundCombined";
     carController.initialize();
     shopperController.initialize();
+
+    this.monstersFound = 0;
+    this.monstersEscaped = 0;
     this.shoppers = [];
     for (var i = 0; i < 5; i++) {
       this.addShopperInStore();
     }
-    this.addShopper();
+  //  this.addShopper();
     window.Play = this;
-    game.input.onDown.add(this.addShopper, this);
+    game.input.onDown.add(this.checkIfHitShopper, this);
+    game.input.mouse.onMouseMove = this.checkIfHoverShopper;
   },
   update: function () {
-    // if (Math.random() < 0.1 && this.shoppers.length < settings.spaces) {
-    //   this.addShopper();
-    // }
+    if (Math.random() < 0.005 && this.shoppers.length < settings.spaces) {
+      this.addShopper();
+    }
 
   var removeShoppers = [];
     _.each(this.shoppers, _.bind(function (shopper, index) {
@@ -31,25 +38,33 @@ module.exports = {
       if (!shopper.car.isParked) {
           carController.updateCar(shopper.car);
       } else if (shopper.readyToLeave) {
+        if (shopper.person.isMonster) {
+          this.monstersEscaped ++;
+        }
         carController.startLeaving(shopper.car);
       } else {
         this.updateShopper(shopper);
       }
-      
+
       if (shopper.car.readyToBeDestroyed === true) {
+
         removeShoppers.push(index);
       }
 
     }, this));
     for ( var i = removeShoppers.length -1; i >= 0; i--) {
       console.log("shopper removed");
+
       this.shoppers[removeShoppers[i]].car.destroy();
       this.shoppers[removeShoppers[i]].person.destroy();
       this.shoppers.splice(removeShoppers[i], 1);
+
     }
   },
   render: function () {
     game.debug.text(game.time.fps || "--", 2, 14, "#a7aebe");
+    game.debug.text("Monsters found: " + this.monstersFound , 2, 24, "#a7aebe");
+    game.debug.text("Monsters escaped: " + this.monstersEscaped , 2, 34, "#a7aebe");
   },
   updateShopper: function (shopper) {
     shopper.stateUpdate(shopper);
@@ -79,6 +94,7 @@ module.exports = {
       person.scale.set(1.5, 1.5);
       person.visible = false;
       person.objectType = "person";
+      person.hitArea = new Phaser.Rectangle(0, 0, 80, 80);
       person.getBounds = function () {
         return {
           top: this.top - settings.personSpace,
@@ -88,6 +104,14 @@ module.exports = {
         };
       };
       collisionController.add(person);
+
+      person.isMonster = Math.random() < .6;
+      if (person.isMonster) {
+        person.monsterType = shopperController.monsterTypes[Math.floor(Math.random() *shopperController.monsterTypes.length)]
+      }
+    //  person.inputEnabled = true;
+    //  person.input.useHandCursor = true; //if you want a hand cursor
+      //person.events.onInputDown.add(this.accuseMonster, this);
 
       var cart = game.add.sprite(0,0, "sprites");
       cart.frameName = "cart";
@@ -113,8 +137,48 @@ module.exports = {
         shoppingTime: 2000 + Math.random() * 10000
       }
       this.moveShopper(shopper, x, y, rotation);
-
+      person.shopper = shopper;
       return shopper;
+  },
+  checkIfHitShopper: function (evt) {
+    var clickX = evt.position.x;
+    var clickY = evt.position.y;
+    _.each(this.shoppers, _.bind(function (shopper) {
+      var x = shopper.person.x;
+      var y = shopper.person.y;
+      var dx = x - clickX;
+      var dy = y - clickY;
+      if (dx*dx + dy*dy < 1000) {
+        this.accuseMonster(shopper.person);
+      }
+    }, this));
+  },
+  checkIfHoverShopper:  function (evt) {
+    var clickX = evt.layerX;
+    var clickY = evt.layerY;
+    _.each(this.shoppers, _.bind(function (shopper) {
+      var x = shopper.person.x;
+      var y = shopper.person.y;
+      var dx = x - clickX;
+      var dy = y - clickY;
+      if (dx*dx + dy*dy < 1000) {
+        console.log("hovering");
+      }
+    }, this));
+  },
+  accuseMonster: function (person) {
+    if (person.isMonster) {
+      console.log("You found one!", person.monsterType );
+      this.monstersFound ++;
+      person.visible = false;
+      person.shopper.cart.visible = false;
+      person.shopper.car.visible = false;
+      person.shopper.car.readyToBeDestroyed = true;
+      person.shopper.car.spaceTarget.available = true;
+    } else {
+      game.state.start(GameStates.gameOver);
+      console.log("You accused an innnocent person!");
+    }
   },
   moveShopper: function (shopper, x, y, rotation) {
     shopper.person.position.x = x;

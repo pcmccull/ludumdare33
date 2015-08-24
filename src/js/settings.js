@@ -8,7 +8,7 @@ module.exports = {
   carUpRotationNeg:  -Math.PI / 2,
 
   //car driving settings
-  carVelocity: 3,
+  carVelocity: 5,
   carRandomVelocityChange: 2,
   carRotationVelocity: Math.PI/50,
   turnRadius: 25,
@@ -39,7 +39,7 @@ module.exports = {
   spaceOffset: 65,
 
   lotTop: 175,
-  walkSpeed: 0.6,
+  walkSpeed: .8,
   personLeft: 0,
   personRight: Math.PI,
   personUp: Math.PI/2,

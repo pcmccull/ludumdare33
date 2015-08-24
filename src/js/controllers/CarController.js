@@ -18,7 +18,8 @@ module.exports = {
       "stateDriveUpToStopSign",
       "stateWaitAtStopSign",
       "stateDriveUpToTurnLeft",
-      "stateDriveOutOfScreen"
+      "stateDriveOutOfScreen",
+      "startLeaving"
     );
     this.parkingSpaces = [];
     for (var iColumn = 0; iColumn < settings.columns; iColumn++) {
@@ -137,6 +138,7 @@ module.exports = {
     } else {
       car.isParked = true;
       console.log("car parked", car.spaceTarget);
+
     }
   },
   stateEnterParkingSpaceRight: function (car) {
@@ -146,13 +148,14 @@ module.exports = {
     } else {
       car.isParked = true;
       console.log("car parked", car.spaceTarget);
+
     }
   },
   startLeaving: function (car) {
     if (car.spaceTarget.column % 2 === 0) {
-      car.nextStateUpdate = this.stateEnterParkingSpaceLeft;
+      car.stateUpdate = this.stateBackingOutLeft;
     } else {
-      car.nextStateUpdate = this.stateBackingOutRight;
+      car.stateUpdate = this.stateBackingOutRight;
     }
     car.isParked = false;
   },
@@ -203,7 +206,7 @@ module.exports = {
       }
 
     } else {
-      car.stopTime = (+ new Date) + 3000 * Math.random();
+      car.stopTime = (+ new Date) + 2000 * Math.random();
       car.stateUpdate = this.stateWaitAtStopSign;
     }
   },
@@ -314,7 +317,6 @@ module.exports = {
     return settings.spacesX[space.column];
   },
   findParkingSpace: function () {
-
     var openings = this.getOpenSpaces();
     var evaluate = _.min; //most people park closest to entrance
     if (Math.random() < 0.06) {
