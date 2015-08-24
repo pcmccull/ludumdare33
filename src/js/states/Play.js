@@ -15,6 +15,12 @@ module.exports = {
     background.frameName= "backgroundCombined";
     carController.initialize();
     shopperController.initialize();
+    this.gameObjectsLayer = game.add.group();
+    this.accuseDialog = game.add.sprite(0,0, "sprites");
+    this.accuseDialog.frameName = "accuseDialog";
+    this.accuseDialog.anchor.x = 0.3;
+    this.accuseDialog.visible = false;
+    this.accuseDialog.anchor.y = -.2;
 
     this.monstersFound = 0;
     this.monstersEscaped = 0;
@@ -62,16 +68,16 @@ module.exports = {
     }
   },
   render: function () {
-    game.debug.text(game.time.fps || "--", 2, 14, "#a7aebe");
-    game.debug.text("Monsters found: " + this.monstersFound , 2, 24, "#a7aebe");
-    game.debug.text("Monsters escaped: " + this.monstersEscaped , 2, 34, "#a7aebe");
+    //game.debug.text(game.time.fps || "--", 2, 14, "#a7aebe");
+    game.debug.text("Monsters found: " + this.monstersFound , 560, 24, "#FFFAD5");
+    game.debug.text("Monsters escaped: " + this.monstersEscaped , 560, 40, "#FFFAD5");
   },
   updateShopper: function (shopper) {
     shopper.stateUpdate(shopper);
   },
   addShopper: function () {
     var shopper = this.createShopper(400, 60, -Math.PI/2);
-    var car = carController.addCar();
+    var car = carController.addCar(this.gameObjectsLayer);
     carController.placeAtEntrance(car);
     shopper.stateUpdate = shopperController.stateGetOutOfCar;
 
@@ -87,7 +93,7 @@ module.exports = {
   },
 
   createShopper: function (x, y, rotation) {
-      var person = game.add.sprite(0,0, "sprites");
+      var person = this.gameObjectsLayer.create(0,0, "sprites");
       person.frameName = "person" + (Math.floor(Math.random() * 3) + 1);
       person.anchor.x = 0;
       person.anchor.y = 0.5;
@@ -109,11 +115,8 @@ module.exports = {
       if (person.isMonster) {
         person.monsterType = shopperController.monsterTypes[Math.floor(Math.random() *shopperController.monsterTypes.length)]
       }
-    //  person.inputEnabled = true;
-    //  person.input.useHandCursor = true; //if you want a hand cursor
-      //person.events.onInputDown.add(this.accuseMonster, this);
 
-      var cart = game.add.sprite(0,0, "sprites");
+      var cart = this.gameObjectsLayer.create(0,0, "sprites");
       cart.frameName = "cart";
       cart.anchor.x = 1;
       cart.anchor.y = 0.5;
@@ -156,13 +159,16 @@ module.exports = {
   checkIfHoverShopper:  function (evt) {
     var clickX = evt.layerX;
     var clickY = evt.layerY;
+    this.accuseDialog.visible = false;
     _.each(this.shoppers, _.bind(function (shopper) {
       var x = shopper.person.x;
       var y = shopper.person.y;
       var dx = x - clickX;
       var dy = y - clickY;
       if (dx*dx + dy*dy < 1000) {
-        console.log("hovering");
+        this.accuseDialog.visible = true;
+        this.accuseDialog.x = shopper.person.x;
+        this.accuseDialog.y = shopper.person.y;
       }
     }, this));
   },
@@ -175,7 +181,10 @@ module.exports = {
       person.shopper.car.visible = false;
       person.shopper.car.readyToBeDestroyed = true;
       person.shopper.car.spaceTarget.available = true;
+      this.accuseDialog.visible = false;
     } else {
+      window.monstersEscaped = this.monstersEscaped;
+      window.monstersFound = this.monstersFound;
       game.state.start(GameStates.gameOver);
       console.log("You accused an innnocent person!");
     }

@@ -3,18 +3,28 @@ module.exports = {
   preload: function () {
   },
   create: function () {
-    game.add.text(80, 150, "You harrased innocent people, you're fired!", {font: "20px Courier", fill: "#fffff"});
+    var style = { font: "25px Arial", fill: "#FFFAD5", align: "center" };
 
-    game.add.text(80, 250, "Click to try again", {font: "20px Courier", fill: "#fffff"});
-    var sprite = game.add.sprite(0,0, "title");
-    sprite.scale.set(1.5, 1.5);
+    game.add.text(80, 150, "You harrased an innocent shopper, you're fired!", style);
+    var scoreText = "You found " + window.monstersFound + " monsters.";
+    if (window.monstersEscaped === 0 && window.monstersFound > 0) {
+      scoreText += " You didn't let any monsters escape!";
 
-    //game.state.start(GameStates.play);
+    } else if (window.monstersEscaped > 0){
+        scoreText += " But, you let " + window.monstersEscaped  +" monsters escape.";
+    }
+
+      game.add.text(80, 200, scoreText, style);
+
+    game.add.text(80, 250, "Click to try again", style);
+
+    game.add.text(80, 450, "Tip: Monsters don't return their carts.", style);
+
   },
   update: function () {
     if (game.input.activePointer.isDown)
        {
-           game.state.start(GameStates.play);
+           game.state.start(GameStates.menu);
        }
   }
 }

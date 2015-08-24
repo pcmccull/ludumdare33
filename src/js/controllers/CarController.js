@@ -252,8 +252,8 @@ module.exports = {
       car.readyToBeDestroyed = true;
     }
   },
-  addCar: function () {
-    var car = game.add.sprite(0,0, "sprites");
+  addCar: function (group) {
+    var car = group.create(0,0, "sprites");
     car.frameName= "car" + (Math.floor(Math.random() * 4) + 1);
     car.anchor.x = 0.5;
     car.anchor.y = 0.5;
